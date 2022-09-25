@@ -1,7 +1,6 @@
 package com.example.microstreaminganalytics.utils;
 
 import com.example.microstreaminganalytics.entity.Statistics;
-import com.sergioviera.microstreaminganalytics.entity.Statistics;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.springframework.stereotype.Component;
 

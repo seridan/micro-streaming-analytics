@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=p4ssw0rd
+      - MONGO_INITDB_DATABASE=test_db
+    volumes:
+      - ./mongo-data:/data/db
+      - ./data/init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  rabbitmq3:
+    container_name: "rabbitmq"
+    image: rabbitmq:3.9-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
