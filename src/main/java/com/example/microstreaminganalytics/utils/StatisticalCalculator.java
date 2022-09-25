@@ -1,7 +1,6 @@
 package com.example.microstreaminganalytics.utils;
 
 import com.example.microstreaminganalytics.entity.Statistics;
-import com.sergioviera.microstreaminganalytics.entity.Statistics;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +33,7 @@ public class StatisticalCalculator {
 
         return statistics;
     }
+
     private double calculateMode() {
         double mode = list.stream()
                 .collect(Collectors.groupingBy(i -> i, TreeMap::new, Collectors.counting()))
@@ -45,10 +45,9 @@ public class StatisticalCalculator {
 
         return mode;
     }
+
     private double calculateStandarDeviation(double variance) {
-        double standardDeviation = Math.sqrt(variance);
-        System.out.println("standarDeviation"+standardDeviation);
-        return standardDeviation;
+        return Math.sqrt(variance);
     }
 }
 
