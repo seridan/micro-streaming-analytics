@@ -33,6 +33,7 @@ public class StatisticalCalculator {
 
         return statistics;
     }
+
     private double calculateMode() {
         double mode = list.stream()
                 .collect(Collectors.groupingBy(i -> i, TreeMap::new, Collectors.counting()))
@@ -44,10 +45,9 @@ public class StatisticalCalculator {
 
         return mode;
     }
+
     private double calculateStandarDeviation(double variance) {
-        double standardDeviation = Math.sqrt(variance);
-        System.out.println("standarDeviation"+standardDeviation);
-        return standardDeviation;
+        return Math.sqrt(variance);
     }
 }
 
