@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
+  rabbitmq3:
+    container_name: rabbitmq3
+    image: rabbitmq:3.9-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - type: bind
+        source: ./rabbitmq-enabled-plugins
+        target: /etc/rabbitmq/enabled_plugins
+      - type: bind
+        source: ./rabbitmq.config
+        target: /etc/rabbitmq/rabbitmq.config
+      - type: bind
+        source: ./rabbitmq-defs.json
+        target: /etc/rabbitmq/rabbitmq-defs.json
+  micro-streaming-analytics:
+    container_name: micro-streaming-analytics
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: micro-streaming-analitycs
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - mongodb
+      - rabbitmq3
