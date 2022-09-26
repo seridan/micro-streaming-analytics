@@ -18,6 +18,7 @@ public class StatisticalCalculator {
         list = variableValues;
 
         DescriptiveStatistics descriptiveStatistics = new DescriptiveStatistics();
+        list.forEach(descriptiveStatistics::addValue);
 
         Statistics statistics = new Statistics();
         statistics.setTimestamp(LocalDateTime.now());
