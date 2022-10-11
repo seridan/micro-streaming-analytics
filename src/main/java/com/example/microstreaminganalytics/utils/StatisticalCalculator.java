@@ -14,8 +14,8 @@ public class StatisticalCalculator {
 
     private List<Integer> list;
 
-    public Statistics obtainStatisticCalculations(List<Integer> variableValues) {
-        list = variableValues;
+    public Statistics obtainStatisticCalculations(List<Integer> datapointsValues) {
+        list = datapointsValues;
 
         DescriptiveStatistics descriptiveStatistics = new DescriptiveStatistics();
         list.forEach(descriptiveStatistics::addValue);

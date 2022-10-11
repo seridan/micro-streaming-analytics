@@ -1,7 +1,7 @@
 package com.example.microstreaminganalytics.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.microstreaminganalytics.entity.Datastream;
 
 public interface MicroStreamingAnalyticsService {
-    void persistStatistics(String message) throws JsonProcessingException;
+    void persistStatistics(Datastream datastream);
 }

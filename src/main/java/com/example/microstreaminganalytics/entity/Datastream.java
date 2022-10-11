@@ -6,13 +6,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class DeviceStatistics {
+public class Datastream {
     @Id
     private int id;
     private String version;
-    private Operation operation;
+    private String device;
+    private String path;
+    private String trustedBoot;
+    private List<Datastreams> datastreams;
 }
