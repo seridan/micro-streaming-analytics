@@ -5,7 +5,6 @@ import com.example.microstreaminganalytics.entity.Datastreams;
 import com.example.microstreaminganalytics.entity.Statistics;
 import com.example.microstreaminganalytics.repository.MicroStreamingAnalyticsRepository;
 import com.example.microstreaminganalytics.utils.StatisticalCalculator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

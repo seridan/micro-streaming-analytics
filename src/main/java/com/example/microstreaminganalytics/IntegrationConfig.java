@@ -3,7 +3,6 @@ package com.example.microstreaminganalytics;
 import com.example.microstreaminganalytics.entity.Datastream;
 import com.example.microstreaminganalytics.service.MicroStreamingAnalyticsService;
 import com.example.microstreaminganalytics.service.impl.MicroStreamingAnalyticsServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

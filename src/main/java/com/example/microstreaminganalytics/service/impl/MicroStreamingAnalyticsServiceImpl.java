@@ -7,7 +7,6 @@ import com.example.microstreaminganalytics.entity.Statistics;
 import com.example.microstreaminganalytics.repository.MicroStreamingAnalyticsRepository;
 import com.example.microstreaminganalytics.service.MicroStreamingAnalyticsService;
 import com.example.microstreaminganalytics.utils.StatisticalCalculator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
