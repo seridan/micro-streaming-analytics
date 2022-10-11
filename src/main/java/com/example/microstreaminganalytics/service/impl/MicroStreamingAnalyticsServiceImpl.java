@@ -7,7 +7,6 @@ import com.example.microstreaminganalytics.repository.MicroStreamingAnalyticsRep
 import com.example.microstreaminganalytics.service.MicroStreamingAnalyticsService;
 import com.example.microstreaminganalytics.utils.StatisticalCalculator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,17 +27,13 @@ public class MicroStreamingAnalyticsServiceImpl implements MicroStreamingAnalyti
     }
 
     @Override
-    public void persistStatistics(String message) throws JsonProcessingException {
-        Statistics statistics = obtainStatisticsFromMessage(message);
+    public void persistStatistics(DeviceStatistics deviceStatistics) throws JsonProcessingException {
+        Statistics statistics = obtainStatisticsFromMessage(deviceStatistics);
 
-        logger.info("Message read from myQueue : " + message);
         logger.info("Operation from myQueue : " + microStreamingAnalyticsRepository.save(statistics));
     }
 
-    private Statistics obtainStatisticsFromMessage(String message) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        DeviceStatistics deviceStatistics = objectMapper.readValue(message, DeviceStatistics.class);
-
+    private Statistics obtainStatisticsFromMessage(DeviceStatistics deviceStatistics) {
         Statistics statistics = statisticalCalculator.obtainStatisticCalculations(obtainVariablesValuesFromDeviceStatistics(deviceStatistics));
         statistics.setId(deviceStatistics.getOperation().getResponse().getId());
 
@@ -47,7 +42,7 @@ public class MicroStreamingAnalyticsServiceImpl implements MicroStreamingAnalyti
 
     private List<Integer> obtainVariablesValuesFromDeviceStatistics(DeviceStatistics deviceStatistics) {
         return deviceStatistics.getOperation().getResponse().getVariableList().stream()
-                .map(Variable::getValue)
-                .collect(Collectors.toList());
+            .map(Variable::getValue)
+            .collect(Collectors.toList());
     }
 }
