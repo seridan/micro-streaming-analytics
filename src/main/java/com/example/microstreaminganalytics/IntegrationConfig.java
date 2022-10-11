@@ -18,7 +18,7 @@ import static org.springframework.integration.dsl.Transformers.fromJson;
 
 @Configuration
 public class IntegrationConfig {
-    public static final int PERIOD = 5000;
+    public static final int PERIOD = 20000;
     @Value("${app.queue.name}")
     private String queue;
     Logger logger = LoggerFactory.getLogger(MicroStreamingAnalyticsService.class);
