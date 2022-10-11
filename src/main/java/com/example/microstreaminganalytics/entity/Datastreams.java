@@ -9,12 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Response {
-    private String timestamp;
-    private String name;
+public class Datastreams {
     private String id;
-    private String resultCode;
-    private String resultDescription;
-    private List<Variable> variableList;
-    private List<Step> steps;
+    private String feed;
+    private List<Datapoint> datapoints;
 }

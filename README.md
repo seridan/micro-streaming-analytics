@@ -26,43 +26,46 @@ then in the Publish message option, insert the next Json text in the Payload fie
 
 ```
 {
-    "version": "7.0",
-    "operation": {
-        "response": {
-            "timestamp": 1432454278000,
-            "name": "REBOOT_EQUIPMENT",
-            "id": "072b08d1-0fcb-4a0c-a2d8-99773f9b9327",
-            "resultCode": "SUCCESSFUL",
-            "resultDescription": "No Error.",
-            "variableList": [
-                {
-					"name" : "variable1",
-					"value" : 1
-				},
-				{
-					"name" : "variable2",
-					"value" : 6
-				},
-                 {
-					"name" : "variable3",
-					"value" : 3
-				},
-				{
-					"name" : "variable4",
-					"value" : 4
-				},
-				{
-					"name" : "variable5",
-					"value" : 3
-				},
-				{
-					"name" : "variable5",
-					"value" : 5
-				}
-                ],
-            "steps": []
+  "version": "1.0.0",
+  "datastreams": 
+  [
+    {
+      "id": "temperature",
+      "feed": "feed_1",
+      "datapoints": [
+        {
+          "at": 1431602523123,
+          "value": 25
+        },
+        {
+          "at": 1431602523123,
+          "value": 26
+        },
+        {
+          "at": 1431602523123,
+          "value": 27
         }
+      ]
+    },
+    {
+      "id": "velocity",
+      "feed": "feed_2",
+      "datapoints": [
+        {
+          "at": 1431602523123,
+          "value": 35
+        },
+        {
+          "at": 1431602523123,
+          "value": 46
+        },
+        {
+          "at": 1431602523123,
+          "value": 37
+        }
+      ]
     }
+  ]
 }
 ```
 
