@@ -1,6 +1,6 @@
 package com.example.microstreaminganalytics;
 
-import com.example.microstreaminganalytics.entity.DeviceStatistics;
+import com.example.microstreaminganalytics.entity.Datastream;
 import com.example.microstreaminganalytics.service.MicroStreamingAnalyticsService;
 import com.example.microstreaminganalytics.service.impl.MicroStreamingAnalyticsServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,14 +35,10 @@ public class IntegrationConfig {
     public IntegrationFlow integrationFlow1(ConnectionFactory connectionFactory) {
         return IntegrationFlows.from(Amqp.inboundPolledAdapter(connectionFactory, queue),
                 sourcePollingChannelAdapterSpec -> sourcePollingChannelAdapterSpec.poller(Pollers.fixedDelay(PERIOD)))
-            .transform(fromJson(DeviceStatistics.class))
+            .transform(fromJson(Datastream.class))
             .handle(message -> {
                 logger.info("Message read from INTEGRATION FLOW : " + message);
-                try {
-                    microStreamingAnalyticsService.persistStatistics((DeviceStatistics) message.getPayload());
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+                microStreamingAnalyticsService.persistStatistics((Datastream) message.getPayload());
             })
             .get();
     }

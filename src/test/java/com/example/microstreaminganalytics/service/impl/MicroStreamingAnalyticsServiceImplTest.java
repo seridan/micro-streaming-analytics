@@ -1,5 +1,7 @@
 package com.example.microstreaminganalytics.service.impl;
 
+import com.example.microstreaminganalytics.entity.Datastream;
+import com.example.microstreaminganalytics.entity.Datastreams;
 import com.example.microstreaminganalytics.entity.Statistics;
 import com.example.microstreaminganalytics.repository.MicroStreamingAnalyticsRepository;
 import com.example.microstreaminganalytics.utils.StatisticalCalculator;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -29,12 +33,15 @@ class MicroStreamingAnalyticsServiceImplTest {
     MicroStreamingAnalyticsServiceImpl microStreamingAnalyticsService;
 
     @Test
-    @Disabled
     void shouldPersistStatisticsFromMessage() {
-        when(statisticalCalculator.obtainStatisticCalculations(anyList())).thenReturn(mock(Statistics.class));
-        when(microStreamingAnalyticsRepository.save(any())).thenReturn(any());
+        Datastream datastream = new Datastream();
+        datastream.setDatastreams(List.of(mock(Datastreams.class)));
 
-        verify(microStreamingAnalyticsRepository).save(any());
+        when(statisticalCalculator.obtainStatisticCalculations(anyList())).thenReturn(mock(Statistics.class));
+
+        microStreamingAnalyticsService.persistStatistics(datastream);
+
+        verify(microStreamingAnalyticsRepository).saveAll(any());
         verify(statisticalCalculator).obtainStatisticCalculations(anyList());
     }
 }

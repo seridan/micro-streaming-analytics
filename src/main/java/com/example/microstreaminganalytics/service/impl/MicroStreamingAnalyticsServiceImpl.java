@@ -1,8 +1,9 @@
 package com.example.microstreaminganalytics.service.impl;
 
-import com.example.microstreaminganalytics.entity.DeviceStatistics;
+import com.example.microstreaminganalytics.entity.Datapoint;
+import com.example.microstreaminganalytics.entity.Datastream;
+import com.example.microstreaminganalytics.entity.Datastreams;
 import com.example.microstreaminganalytics.entity.Statistics;
-import com.example.microstreaminganalytics.entity.Variable;
 import com.example.microstreaminganalytics.repository.MicroStreamingAnalyticsRepository;
 import com.example.microstreaminganalytics.service.MicroStreamingAnalyticsService;
 import com.example.microstreaminganalytics.utils.StatisticalCalculator;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,22 +29,28 @@ public class MicroStreamingAnalyticsServiceImpl implements MicroStreamingAnalyti
     }
 
     @Override
-    public void persistStatistics(DeviceStatistics deviceStatistics) throws JsonProcessingException {
-        Statistics statistics = obtainStatisticsFromMessage(deviceStatistics);
+    public void persistStatistics(Datastream datastream)  {
+        List<Statistics> statistics = obtainStatisticsFromDataStream(datastream);
 
-        logger.info("Operation from myQueue : " + microStreamingAnalyticsRepository.save(statistics));
+        logger.info("Operation from myQueue : " + microStreamingAnalyticsRepository.saveAll(statistics));
     }
 
-    private Statistics obtainStatisticsFromMessage(DeviceStatistics deviceStatistics) {
-        Statistics statistics = statisticalCalculator.obtainStatisticCalculations(obtainVariablesValuesFromDeviceStatistics(deviceStatistics));
-        statistics.setId(deviceStatistics.getOperation().getResponse().getId());
+    private List<Statistics> obtainStatisticsFromDataStream(Datastream datastream) {
+        Iterable<Datastreams> datastreamsList = new ArrayList<>(datastream.getDatastreams());
+        List<Statistics> statisticsList = new ArrayList<>();
 
-        return statistics;
+        datastreamsList.forEach(datastreams -> {
+            Statistics statistics = statisticalCalculator.obtainStatisticCalculations(obtainDatapointValuesFromDatastreams(datastreams));
+            statistics.setId(datastreams.getId());
+            statisticsList.add(statistics);
+        });
+
+        return statisticsList;
     }
 
-    private List<Integer> obtainVariablesValuesFromDeviceStatistics(DeviceStatistics deviceStatistics) {
-        return deviceStatistics.getOperation().getResponse().getVariableList().stream()
-            .map(Variable::getValue)
-            .collect(Collectors.toList());
+    private List<Integer> obtainDatapointValuesFromDatastreams(Datastreams datastreams) {
+        return datastreams.getDatapoints().stream()
+                .map(Datapoint::getValue)
+                .collect(Collectors.toList());
     }
 }

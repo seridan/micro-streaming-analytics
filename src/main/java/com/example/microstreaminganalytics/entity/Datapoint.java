@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Variable {
-    private String name;
+public class Datapoint {
+    private int from;
+    private long at;
     private int value;
 }
